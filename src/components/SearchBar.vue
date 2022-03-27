@@ -1,9 +1,9 @@
 <template>
     <div class="search-bar">
         <div class="input-group">
-            <input class="form-control input-lg" v-model="term" placeholder="Search for a movie" />
+            <input class="form-control" v-model="term" placeholder="Search for a movie" />
             <span class="input-group-btn">
-                <button class="btn btn-info input-lg" @click="onSearchButtonClick">Ara</button>
+                <button class="btn btn-info" @click="onSearchButtonClick">Search</button>
             </span>
         </div>
     </div>
@@ -28,6 +28,6 @@ const onSearchButtonClick = () => {
     text-align: center;
 }
 .search-bar input {
-    width: 75%;
+    width: 70%;
 }
 </style>

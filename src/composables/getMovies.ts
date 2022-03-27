@@ -4,6 +4,7 @@ import Movie from '../types/movie'
 const getMovies = () => {
 
   const movies = ref<Movie[]>([])
+  const pageCount = ref(1)
   const error = ref(null)
 
   const load = async (title: string, page: number) => {
@@ -15,15 +16,18 @@ const getMovies = () => {
       }
 
       let jsonData = await data.json()
+
+      debugger
       
       movies.value = jsonData.data
+      pageCount.value = jsonData.total_pages
     }
     catch (err: any) {
       error.value = err.message
     }
   }
 
-  return { movies, error, load }
+  return { movies, pageCount, error, load }
 }
 
 export default getMovies

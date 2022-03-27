@@ -1,24 +1,28 @@
 <template>
-    <div class="home">
-        <div v-if="error">{{ error }}</div>
-        <div v-if="movies.length" class="layout">
-            <div class="movie-list">
-                <div v-for="movie in movies" :key="movie.imdbID">
-                    <SingleMovie :movie="movie" />
-                </div>
-            </div>
+    <Loader v-if="isLoading"></Loader>
+    <template v-else>
+        <div class="row" v-if="error === null">
+            <MovieList :movies="movies" :pageCount="pageCount"></MovieList>
         </div>
-    </div>
+        <div v-else>{{ error }}</div>
+    </template>
 </template>
 
 <script setup lang="ts">
 
-import getMovies from '../composables/getMovies'
-import SingleMovie from './SingleMovie.vue'
+import { onMounted, ref } from 'vue';
+import getMovies from '../composables/getMovies';
+import Loader from './Loader.vue';
+import MovieList from './MovieList.vue';
 
-const { movies, error, load } = getMovies()
+const isLoading = ref(true)
+const page = ref(1);
+const { movies, pageCount, error, load } = getMovies()
+const term = ref('');
 
-load('', 1)
+onMounted(() => {
+    load(term.value, page.value).then(() => isLoading.value = false)
+})
 
 </script>
 

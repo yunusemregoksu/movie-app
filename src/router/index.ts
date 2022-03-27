@@ -5,18 +5,18 @@ import Search from '../components/Search.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/:page?',
     name: 'Home',
     component: Home
   },
   {
-    path: '/favorites',
+    path: '/favorites:page?',
     name: 'Favorites',
     component: Favorites,
     props: true
   },
   {
-    path: '/search/:term?',
+    path: '/search/:term?/:page?',
     name: 'Search',
     component: Search
   },
