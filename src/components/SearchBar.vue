@@ -1,7 +1,7 @@
 <template>
     <div class="search-bar">
         <div class="input-group">
-            <input class="form-control" v-model="term" placeholder="Search for a movie" />
+            <input class="form-control" v-model="term" placeholder="Search for a movie" @keyup.enter="onSearchButtonClick" />
             <span class="input-group-btn">
                 <button class="btn btn-info" @click="onSearchButtonClick">Search</button>
             </span>
