@@ -7,7 +7,7 @@ const getMovies = () => {
   const pageCount = ref(1)
   const error = ref(null)
 
-  const load = async (title: string, page: number) => {
+  const load = async (title: string | string[], page: number) => {
     try {
       let data = await fetch(`https://jsonmock.hackerrank.com/api/movies/search/?Title=${title}&page=${page}`)
 
@@ -17,8 +17,6 @@ const getMovies = () => {
 
       let jsonData = await data.json()
 
-      debugger
-      
       movies.value = jsonData.data
       pageCount.value = jsonData.total_pages
     }

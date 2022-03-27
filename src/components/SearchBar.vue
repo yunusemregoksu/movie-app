@@ -10,14 +10,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 const term = ref<string | string[]>('')
-const router = useRouter()
+const route = useRoute()
+
+onMounted(() => {
+    term.value = route.params.term
+})
 
 const onSearchButtonClick = () => {
-    router.push({ name: 'Search', params: { term: term.value } })
+    if (term.value) {
+        window.location.replace(`/search/${term.value}`)
+    }
 }
 
 </script>

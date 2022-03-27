@@ -4,6 +4,7 @@
             <SingleMovie v-for="movie in movies" :key="movie.imdbID" :movie="movie"></SingleMovie>
             <hr />
             <paginate
+                v-model="currentPage"
                 :page-count="pageCount"
                 :page-range="5"
                 :margin-pages="2"
@@ -18,17 +19,16 @@
 </template>
 
 <script setup lang="ts">
-import SingleMovie from './SingleMovie.vue'
+import { ref } from 'vue'
 import Paginate from 'vuejs-paginate-next'
-import { useRoute, useRouter } from 'vue-router'
+import SingleMovie from './SingleMovie.vue'
 
-const router = useRouter()
-const route = useRoute()
-const props = defineProps(['movies', 'pageCount'])
+const emits = defineEmits(['pageChanged'])
+const props = defineProps(['movies', 'pageCount', 'currentPage'])
+
 const clickCallback = (num: number) => {
-    router.push({ name: route.name || "Home", params: { page: num } })
+    emits('pageChanged', num)
 }
-
 
 </script>
 
