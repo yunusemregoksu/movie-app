@@ -11,6 +11,7 @@
 <script setup lang="ts">
 
 import { onMounted, ref } from 'vue'
+import getFavoriteMovies from '../composables/getFavoriteMovies';
 import getMovies from '../composables/getMovies'
 import Loader from './Loader.vue'
 import MovieList from './MovieList.vue'

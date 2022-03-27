@@ -1,20 +1,61 @@
 <template>
     <div class="list-item">
         <div class="row">
-            <div class="col-md-4">{{ movie.Year }}</div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>{{ movie.Title }}</h3>
-                    </div>
-                </div>
+            <div class="col-md-2">{{ movie.Year }}</div>
+            <div class="col-md-9">
+                <h3>{{ movie.Title }}</h3>
+            </div>
+            <div class="col-md-1">
+                <i
+                    class="bi bi-star-fill"
+                    @click="setMovieFavoriteStatus(false)"
+                    v-if="isFav"
+                    style="font-size: 2rem;"
+                ></i>
+                <i
+                    class="bi bi-star"
+                    @click="setMovieFavoriteStatus(true)"
+                    v-else
+                    style="font-size: 2rem;"
+                ></i>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted, onUpdated, ref } from 'vue';
+import getFavoriteMovies from '../composables/getFavoriteMovies';
+
 const props = defineProps(['movie'])
+const isFav = ref(false)
+const { favoriteMovies, favError, loadFavs } = getFavoriteMovies()
+
+onMounted(() => {
+    loadFavs()
+
+    let fav = favoriteMovies.value.findIndex((x: any) => { return x.imdbID === props.movie.imdbID }) >= 0
+    isFav.value = fav
+})
+
+const setMovieFavoriteStatus = (liked: boolean) => {
+    if (localStorage.getItem('favoriteMovies') === null) {
+        localStorage.setItem('favoriteMovies', JSON.stringify([]))
+    }
+
+    favoriteMovies.value = JSON.parse(localStorage.getItem('favoriteMovies') || "")
+
+    if (liked) {
+        favoriteMovies.value = [...favoriteMovies.value, props.movie]
+        localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies.value))
+        isFav.value = true
+    }
+    else {
+        favoriteMovies.value = favoriteMovies.value.filter((x: any) => { return x.imdbID !== props.movie.imdbID })
+        localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies.value))
+        isFav.value = false
+    }
+}
 </script>
 
 <style scoped>

@@ -17,6 +17,7 @@
 
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import getFavoriteMovies from '../composables/getFavoriteMovies'
 import getMovies from '../composables/getMovies'
 import Loader from './Loader.vue'
 import MovieList from './MovieList.vue'
