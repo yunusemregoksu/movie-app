@@ -8,13 +8,15 @@ const getMovies = () => {
 
   const load = async (title: string, page: number) => {
     try {
-      let data = await fetch('https://jsonmock.hackerrank.com/api/movies/search/?Title=${title}&page=${page}')
+      let data = await fetch(`https://jsonmock.hackerrank.com/api/movies/search/?Title=${title}&page=${page}`)
 
       if (!data.ok) {
         throw Error('no available data')
       }
 
-      movies.value = await data.json()
+      let jsonData = await data.json()
+      
+      movies.value = jsonData.data
     }
     catch (err: any) {
       error.value = err.message

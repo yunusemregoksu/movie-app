@@ -17,6 +17,9 @@ import getMovies from '../composables/getMovies'
 import SingleMovie from './SingleMovie.vue'
 
 const { movies, error, load } = getMovies()
+
+load('', 1)
+
 </script>
 
 <style scoped>
